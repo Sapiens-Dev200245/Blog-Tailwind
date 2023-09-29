@@ -71,6 +71,9 @@ function Setting() {
         );
         localStorage.setItem("currentUser", JSON.stringify(dataset));
         toast.success(res.data.msg);
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       } catch (error) {
         toast.error(error.response.data.msg);
       }
