@@ -84,21 +84,31 @@ export default function Nav() {
         />
       </div>
       {open && (
-        <ul className="absolute z-50 text-sm top-14 left-0  text-center w-full bg-white md:hidden">
+        <ul
+          className="absolute z-50 text-sm top-14 left-0  text-center w-full bg-white md:hidden"
+          onClick={() => setOpen(!open)}
+        >
           <li className="text-sm mt-2 cursor-pointer hover:text-red-400 duration-500 ease-in-out hover:-translate-y-1">
-            Home
+            <Link to="/">Home</Link>
           </li>
           <li className="text-sm mt-2 cursor-pointer hover:text-red-400 duration-500 ease-in-out hover:-translate-y-1">
-            Services
+            <Link to="/">Services</Link>
           </li>
           <li className="text-sm mt-2 cursor-pointer hover:text-red-400 duration-500 ease-in-out hover:-translate-y-1">
-            Write
+            <Link to={user ? "/write" : "/register"}>Write</Link>
           </li>
           <li className="text-sm mt-2 cursor-pointer hover:text-red-400 duration-500 ease-in-out hover:-translate-y-1">
-            {user === true ? "Setting" : "Register"}
+            <Link to={user ? "/setting" : "/register"}>
+              {user ? "Setting" : "Register"}
+            </Link>
           </li>
           <li className="text-sm mt-2 cursor-pointer hover:text-red-400 duration-500 ease-in-out hover:-translate-y-1">
-            {user === true ? "Logout" : "Login"}
+            <Link
+              to={!user === true ? "/login" : "/logout"}
+              onClick={!user === true ? "" : handleLogout}
+            >
+              {user === true ? "Logout" : "Login"}
+            </Link>
           </li>
         </ul>
       )}
