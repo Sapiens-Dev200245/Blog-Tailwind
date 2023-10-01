@@ -1,8 +1,48 @@
 import React from "react";
 import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 export default function WritePost() {
   const [img, setImg] = useState(false);
+  const [title, setTitle] = useState("");
+  const [desc, setdesc] = useState("");
+  const user = JSON.parse(localStorage.getItem("user"));
+  const dataset = {
+    username: user.username,
+    title,
+    desc,
+  };
+  const handlecreate = async (e) => {
+    e.preventDefault();
+    try {
+      if (!desc || !title) {
+        return toast.error("Please enter a description and title");
+      }
+      if (img) {
+        const data = new FormData();
+        const filename = Date.now() + img.name;
+        data.append("name", filename);
+        data.append("file", img);
+        dataset.photo = filename;
+        try {
+          await axios.post("http://localhost:5000/upload", data);
+        } catch (err) {
+          console.log("Cant Upload");
+        }
+      } else {
+        dataset.profilePic = user.profilePic;
+      }
+      const res = await axios.post("http://localhost:5000/create", dataset);
+      toast.success(res.data.msg);
+
+      // รีโหลดหน้าเว็บ
+    } catch (error) {
+      toast.error(error.response.data.msg);
+    }
+  };
+
   return (
     <div className="h-screen w-screen mt-40 px-7 md:px-12 lg:px-16 2xl:px-44">
       <div>
@@ -37,6 +77,7 @@ export default function WritePost() {
           onChange={(e) => setImg(e.target.files[0])}
         />
         <input
+          onChange={(e) => setTitle(e.target.value)}
           type="text"
           placeholder="Title"
           className="
@@ -48,17 +89,19 @@ export default function WritePost() {
         />
       </div>
       <textarea
+        onChange={(e) => setdesc(e.target.value)}
         name=""
         id=""
         placeholder="Description"
         className="w-full h-[300px] mt-2 outline-none text-[12px] md:text-[16px]"
       ></textarea>
       <button
-        type="submit"
+        onClick={handlecreate}
         className="bg-teal-300 text-[10px] md:text-[16px] p-2 md:p-3 rounded-md hover:-translate-y-1 duration-500"
       >
         Save Post
       </button>
+      <ToastContainer />
     </div>
   );
 }

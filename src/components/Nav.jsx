@@ -1,29 +1,41 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { UserContext } from "../context/UserContext";
 import axios from "axios";
 
 export default function Nav() {
+  const [user, setUser] = useState(null);
+  const { setUserInfo, userInfo } = useContext(UserContext);
   const [open, setOpen] = useState(false);
-  const [user, setUser] = useState(false);
-  const [profile, setProfile] = useState("");
   const pf = "http://localhost:5000/images/";
-
+  const Useref = JSON.parse(localStorage.getItem("user"));
   useEffect(() => {
-    const currentUserData = JSON.parse(localStorage.getItem("currentUser"));
-    setProfile(currentUserData);
-    setUser(!!currentUserData);
-    console.log("useEffect ทำงาน");
-  }, [localStorage]);
+    const fetchuser = async () => {
+      const res = await axios.get(
+        `http://localhost:5000/getuser/${Useref?._id}`
+      );
+      setUserInfo(res.data);
+      setUser(true);
+    };
+    fetchuser();
+  }, []);
 
   const handleLogout = async (e) => {
     e.preventDefault();
-    localStorage.removeItem("currentUser");
-    window.location.replace("/");
+    localStorage.removeItem("user");
+    setUserInfo("");
+    toast.success("Logged out");
+    setTimeout(() => {
+      window.location.replace("/");
+    }, 2000);
   };
 
   return (
     <div
-      className="fixed 
+      className="
+    fixed 
     top-0 
     z-50 
     left-0 
@@ -33,7 +45,7 @@ export default function Nav() {
     sm:px-5 
     md:px-5  
     md:h-[90px] 
-    bg-white 
+    bg-zinc-900
     flex justify-between items-center"
     >
       <div className=" w-[50px] h-[50px] md:w-[70px] md:h-[70px] overflow-hidden bg-slate-400 rounded-full">
@@ -44,6 +56,7 @@ export default function Nav() {
             className="scale-150 md:scale-150  rounded-full object-cover"
           />
         </Link>
+        <ToastContainer />
       </div>
       <div>
         <ul className="hidden md:flex justify-between items-center gap-5">
@@ -54,7 +67,7 @@ export default function Nav() {
             <Link to="/">Services</Link>
           </li>
           <li className="text-sm md:text-xl cursor-pointer hover:text-red-400 duration-500 ease-in-out hover:-translate-y-1">
-            <Link to="/write">Write</Link>
+            <Link to={user ? "/write" : "/register"}>Write</Link>
           </li>
           <li className="text-sm md:text-xl cursor-pointer hover:text-red-400 duration-500 ease-in-out hover:-translate-y-1">
             <Link to={user ? "/setting" : "/register"}>
@@ -76,7 +89,7 @@ export default function Nav() {
           src={
             !user
               ? "https://img.freepik.com/premium-vector/anime-cartoon-character-vector-illustration_648489-34.jpg "
-              : pf + profile?.profilePic
+              : pf + userInfo?.profilePic
           }
           alt=""
           className="w-12 h-12 md:w-20 md:h-20 cursor-pointer object-fill rounded-full"
