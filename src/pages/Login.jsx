@@ -53,7 +53,7 @@ function Login() {
         <p>
           Not a member{" "}
           <Link
-            to="/login"
+            to="/register"
             className="hover:-translate-y-1 hover:text-amber-500 duration-500"
           >
             Click!!!
