@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -7,8 +8,7 @@ function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const notify = () => toast();
+  const navigate = useNavigate();
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
@@ -17,8 +17,8 @@ function Register() {
         email,
         password,
       });
+      navigate("/login");
       toast.success("Register Success");
-      // console.log(res.msg);
     } catch (error) {
       if (error.response) {
         toast.error(error.response.data.msg); // เข้าถึงข้อความ msg ใน error.response.data

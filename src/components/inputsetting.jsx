@@ -3,8 +3,10 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UserContext } from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 function inputsetting() {
+  const navigate = useNavigate();
   const { setUserInfo, userInfo } = useContext(UserContext);
   const pf = "http://localhost:5000/images/";
   const [file, setFile] = useState(null);
@@ -60,6 +62,7 @@ function inputsetting() {
         setUserInfo(dataset);
         localStorage.setItem("user", JSON.stringify(dataset));
         toast.success(res.data.msg);
+        setUpdate(false);
       } catch (error) {
         toast.error(error.response.data.msg);
       }
@@ -73,9 +76,24 @@ function inputsetting() {
         localStorage.setItem("user", JSON.stringify(dataset));
         toast.success(res.data.msg);
         setUpdatedata(dataset);
+        setUpdate(false);
       } catch (error) {
         toast.error(error.response.data.msg);
       }
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      const res = await axios.delete(
+        "http://localhost:5000/delete/" + userid._id
+      );
+      localStorage.removeItem("user");
+      setUserInfo(null);
+      toast.success(res.data.msg);
+      navigate("/");
+    } catch (error) {
+      toast.error(error.response.data.msg);
     }
   };
   return (
@@ -97,7 +115,10 @@ function inputsetting() {
               onClick={() => setUpdate(!updata)}
               className="bx bx-edit text-teal-700 hover:-translate-y-1 duration-500 cursor-pointer"
             ></i>
-            <i className="bx bx-x-circle text-red-600 hover:-translate-y-1 duration-500 cursor-pointer"></i>
+            <i
+              onClick={handleDelete}
+              className="bx bx-x-circle text-red-600 hover:-translate-y-1 duration-500 cursor-pointer"
+            ></i>
           </div>
         </div>
         {updata && (

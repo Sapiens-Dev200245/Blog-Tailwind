@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import Inputsetting from "../components/inputsetting";
 
 function Setting() {

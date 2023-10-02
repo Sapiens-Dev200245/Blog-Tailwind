@@ -3,10 +3,22 @@ import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
 const data = [
   {
-    url: "https://i0.wp.com/news.qoo-app.com/en/wp-content/uploads/sites/3/2023/03/Solo_Leveling_Arise_Website_Feature-1-1.jpg",
+    url: "/slide1.jpg",
   },
   {
-    url: "https://images5.alphacoders.com/120/1206701.jpg",
+    url: "/slide2.jpg",
+  },
+  {
+    url: "/slide3.jpg",
+  },
+  {
+    url: "/slide4.jpg",
+  },
+  {
+    url: "/slide5.jpg",
+  },
+  {
+    url: "/slide6.jpg",
   },
 ];
 

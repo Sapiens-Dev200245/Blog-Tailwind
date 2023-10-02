@@ -3,12 +3,13 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UserContext } from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const { setUserInfo } = useContext(UserContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  const navigate = useNavigate();
   const handleLogin = async () => {
     if (!username || !password) {
       return toast.error("Please enter your email and password");
@@ -20,11 +21,9 @@ function Login() {
       });
       localStorage.setItem("user", JSON.stringify(res.data));
       setUserInfo(res.data);
-      setTimeout(() => {
-        window.location.replace("/");
-      }, 2000);
+      console.log(setUserInfo);
+      navigate("/");
       toast.success("Login successfully");
-      console.log(res.data);
     } catch (error) {
       toast.error(error.response.data.msg);
     }

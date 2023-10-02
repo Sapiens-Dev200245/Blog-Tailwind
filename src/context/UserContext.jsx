@@ -5,6 +5,10 @@ export const UserContext = createContext({});
 export function UserContextProvider({ children }) {
   const [userInfo, setUserInfo] = useState({});
 
+  useEffect(() => {
+    setUserInfo(JSON.parse(localStorage.getItem("user")));
+  }, []);
+  console.log(userInfo);
   return (
     <UserContext.Provider value={{ userInfo, setUserInfo }}>
       {children}

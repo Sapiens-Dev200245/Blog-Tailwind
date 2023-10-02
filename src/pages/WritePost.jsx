@@ -3,12 +3,14 @@ import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function WritePost() {
   const [img, setImg] = useState(false);
   const [title, setTitle] = useState("");
   const [desc, setdesc] = useState("");
   const user = JSON.parse(localStorage.getItem("user"));
+  const navigate = useNavigate();
   const dataset = {
     username: user.username,
     title,
@@ -35,9 +37,9 @@ export default function WritePost() {
         dataset.profilePic = user.profilePic;
       }
       const res = await axios.post("http://localhost:5000/create", dataset);
+      navigate(`/${res.data.savedPost._id}`);
       toast.success(res.data.msg);
-
-      // รีโหลดหน้าเว็บ
+      console.log(res.data);
     } catch (error) {
       toast.error(error.response.data.msg);
     }

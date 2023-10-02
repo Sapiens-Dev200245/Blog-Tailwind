@@ -3,51 +3,20 @@ import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UserContext } from "../context/UserContext";
-import axios from "axios";
 
 export default function Nav() {
-  const [user, setUser] = useState(null);
-  const { setUserInfo, userInfo } = useContext(UserContext);
+  const { userInfo, setUserInfo } = useContext(UserContext);
   const [open, setOpen] = useState(false);
+  const user = userInfo;
   const pf = "http://localhost:5000/images/";
-  const Useref = JSON.parse(localStorage.getItem("user"));
-  useEffect(() => {
-    const fetchuser = async () => {
-      const res = await axios.get(
-        `http://localhost:5000/getuser/${Useref?._id}`
-      );
-      setUserInfo(res.data);
-      setUser(true);
-    };
-    fetchuser();
-  }, []);
 
-  const handleLogout = async (e) => {
-    e.preventDefault();
+  const handleLogout = () => {
     localStorage.removeItem("user");
-    setUserInfo("");
-    toast.success("Logged out");
-    setTimeout(() => {
-      window.location.replace("/");
-    }, 2000);
+    setUserInfo(null);
+    toast.success("Logged out successfully");
   };
-
   return (
-    <div
-      className="
-    fixed 
-    top-0 
-    z-50 
-    left-0 
-    w-full 
-    px-1 
-    h-[60px] 
-    sm:px-5 
-    md:px-5  
-    md:h-[90px] 
-    bg-zinc-900
-    flex justify-between items-center"
-    >
+    <div className="fixed top-0 z-50 left-0 w-full px-1 h-[60px] sm:px-5 md:px-5  md:h-[90px]  bg-zinc-900 flex justify-between items-center">
       <div className=" w-[50px] h-[50px] md:w-[70px] md:h-[70px] overflow-hidden bg-slate-400 rounded-full">
         <Link to="/">
           <img
@@ -67,19 +36,19 @@ export default function Nav() {
             <Link to="/">Services</Link>
           </li>
           <li className="text-sm md:text-xl cursor-pointer hover:text-red-400 duration-500 ease-in-out hover:-translate-y-1">
-            <Link to={user ? "/write" : "/register"}>Write</Link>
+            <Link to={!!user ? "/write" : "/register"}>Write</Link>
           </li>
           <li className="text-sm md:text-xl cursor-pointer hover:text-red-400 duration-500 ease-in-out hover:-translate-y-1">
-            <Link to={user ? "/setting" : "/register"}>
-              {user ? "Setting" : "Register"}
+            <Link to={!!user ? "/setting" : "/register"}>
+              {!!user ? "Setting" : "Register"}
             </Link>
           </li>
           <li className="text-sm md:text-xl cursor-pointer hover:text-red-400 duration-500 ease-in-out hover:-translate-y-1">
             <Link
-              to={!user === true ? "/login" : "/logout"}
-              onClick={!user === true ? "" : handleLogout}
+              to={!!user ? "" : "/login"}
+              onClick={!!user ? handleLogout : ""}
             >
-              {user === true ? "Logout" : "Login"}
+              {!!user === true ? "Logout" : "Login"}
             </Link>
           </li>
         </ul>
@@ -108,19 +77,19 @@ export default function Nav() {
             <Link to="/">Services</Link>
           </li>
           <li className="text-sm mt-2 cursor-pointer hover:text-red-400 duration-500 ease-in-out hover:-translate-y-1">
-            <Link to={user ? "/write" : "/register"}>Write</Link>
+            <Link to={!!user ? "/write" : "/register"}>Write</Link>
           </li>
           <li className="text-sm mt-2 cursor-pointer hover:text-red-400 duration-500 ease-in-out hover:-translate-y-1">
-            <Link to={user ? "/setting" : "/register"}>
-              {user ? "Setting" : "Register"}
+            <Link to={!!user ? "/setting" : "/register"}>
+              {!!user ? "Setting" : "Register"}
             </Link>
           </li>
           <li className="text-sm mt-2 cursor-pointer hover:text-red-400 duration-500 ease-in-out hover:-translate-y-1">
             <Link
-              to={!user === true ? "/login" : "/logout"}
-              onClick={!user === true ? "" : handleLogout}
+              to={!!user ? "" : "/login"}
+              onClick={!!user ? handleLogout : ""}
             >
-              {user === true ? "Logout" : "Login"}
+              {!!user ? "Logout" : "Login"}
             </Link>
           </li>
         </ul>
