@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -59,12 +59,12 @@ function Register() {
         </button>
         <p>
           Have alreary account{" "}
-          <a
-            href="/login"
+          <Link
+            to="/login"
             className="hover:-translate-y-1 hover:text-amber-500 duration-500"
           >
             Click!!!
-          </a>
+          </Link>
         </p>
       </div>
       <ToastContainer />

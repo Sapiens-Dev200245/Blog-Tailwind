@@ -3,7 +3,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UserContext } from "../context/UserContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function Login() {
   const { setUserInfo } = useContext(UserContext);
@@ -52,12 +52,12 @@ function Login() {
         </button>
         <p>
           Not a member{" "}
-          <a
-            href="/login"
+          <Link
+            to="/login"
             className="hover:-translate-y-1 hover:text-amber-500 duration-500"
           >
             Click!!!
-          </a>
+          </Link>
         </p>
       </div>
       <ToastContainer />
