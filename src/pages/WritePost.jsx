@@ -29,14 +29,14 @@ export default function WritePost() {
         data.append("file", img);
         dataset.photo = filename;
         try {
-          await axios.post("http://localhost:5000/upload", data);
+          await axios.post("https://api-blog-mquf.onrender.com/upload", data);
         } catch (err) {
           console.log("Cant Upload");
         }
       } else {
         dataset.profilePic = user.profilePic;
       }
-      const res = await axios.post("http://localhost:5000/create", dataset);
+      const res = await axios.post("https://api-blog-mquf.onrender.com/create", dataset);
       navigate(`/${res.data.savedPost._id}`);
       toast.success(res.data.msg);
       console.log(res.data);

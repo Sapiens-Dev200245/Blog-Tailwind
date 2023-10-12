@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 function inputsetting() {
   const navigate = useNavigate();
   const { setUserInfo, userInfo } = useContext(UserContext);
-  const pf = "http://localhost:5000/images/";
+  const pf = "https://api-blog-mquf.onrender.com/images/";
   const [file, setFile] = useState(null);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -22,7 +22,7 @@ function inputsetting() {
   useEffect(() => {
     const fetchuser = async () => {
       const res = await axios.get(
-        `http://localhost:5000/getuser/${userid._id}`
+        `https://api-blog-mquf.onrender.com/getuser/${userid._id}`
       );
       setUsername(res.data.username);
       setEmail(res.data.email);
@@ -45,7 +45,7 @@ function inputsetting() {
       data.append("file", file);
       dataset.profilePic = filename;
       try {
-        await axios.post("http://localhost:5000/upload", data);
+        await axios.post("https://api-blog-mquf.onrender.com/upload", data);
       } catch (err) {
         console.log("Cant Upload");
       }
@@ -56,7 +56,7 @@ function inputsetting() {
       dataset.resetpassword = newpassword;
       try {
         const res = await axios.put(
-          `http://localhost:5000/user/${userid._id}`,
+          `https://api-blog-mquf.onrender.com/user/${userid._id}`,
           dataset
         );
         setUserInfo(dataset);
@@ -69,7 +69,7 @@ function inputsetting() {
     } else {
       try {
         const res = await axios.put(
-          `http://localhost:5000/user/${userid._id}`,
+          `https://api-blog-mquf.onrender.com/user/${userid._id}`,
           dataset
         );
         setUserInfo(dataset);
@@ -86,7 +86,7 @@ function inputsetting() {
   const handleDelete = async () => {
     try {
       const res = await axios.delete(
-        "http://localhost:5000/delete/" + userid._id
+        "https://api-blog-mquf.onrender.com/delete/" + userid._id
       );
       localStorage.removeItem("user");
       setUserInfo(null);

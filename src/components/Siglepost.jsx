@@ -10,7 +10,7 @@ function Siglepost() {
   const { userInfo } = useContext(UserContext);
   console.log(userInfo);
   const PostID = useLocation();
-  const pf = "http://localhost:5000/images/";
+  const pf = "https://api-blog-mquf.onrender.com/images/";
   const [post, setPost] = useState("");
   const [edit, SetEdit] = useState(false);
   const [title, setTitle] = useState("");
@@ -19,7 +19,7 @@ function Siglepost() {
   const navigate = useNavigate();
   useEffect(() => {
     const fetchPost = async () => {
-      const res = await axios.get("http://localhost:5000" + PostID.pathname);
+      const res = await axios.get("https://api-blog-mquf.onrender.com" + PostID.pathname);
       setPost(res.data.post);
       setTitle(res.data.post.title);
       setDesc(res.data.post.desc);
@@ -46,7 +46,7 @@ function Siglepost() {
         data.append("file", file);
         dataset.photo = filename;
         try {
-          await axios.post("http://localhost:5000/upload", data);
+          await axios.post("https://api-blog-mquf.onrender.com/upload", data);
         } catch (err) {
           console.log("Cant Upload");
         }
@@ -55,7 +55,7 @@ function Siglepost() {
       }
 
       const res = await axios.put(
-        "http://localhost:5000" + PostID.pathname,
+        "https://api-blog-mquf.onrender.com" + PostID.pathname,
         dataset
       );
       setPost(res.data.post);
@@ -66,7 +66,7 @@ function Siglepost() {
   };
 
   const handledelete = async () => {
-    const res = await axios.delete("http://localhost:5000" + PostID.pathname);
+    const res = await axios.delete("https://api-blog-mquf.onrender.com" + PostID.pathname);
     toast.success("Post has been deleted");
     navigate("/");
     console.log(res);

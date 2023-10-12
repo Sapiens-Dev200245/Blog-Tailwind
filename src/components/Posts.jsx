@@ -29,7 +29,7 @@ const AllPosts = [
 ];
 function Posts({ posts }) {
   const postsArray = Object.values(posts);
-  const pf = "http://localhost:5000/images/";
+  const pf = "https://api-blog-mquf.onrender.com/images/";
   return (
     <div className="grid grid-cols-2 gap-3 w-full mt-9 px-4 md:grid-cols-3 md:px-10 lg:px-28 2xl:grid-cols-4 ">
       {postsArray.map((p) => (

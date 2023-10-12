@@ -15,7 +15,7 @@ function Login() {
       return toast.error("Please enter your email and password");
     }
     try {
-      const res = await axios.post("http://localhost:5000/login", {
+      const res = await axios.post("https://api-blog-mquf.onrender.com/login", {
         username,
         password,
       });

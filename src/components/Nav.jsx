@@ -8,7 +8,7 @@ export default function Nav() {
   const { userInfo, setUserInfo } = useContext(UserContext);
   const [open, setOpen] = useState(false);
   const user = userInfo;
-  const pf = "http://localhost:5000/images/";
+  const pf = "https://api-blog-mquf.onrender.com/images/";
 
   const handleLogout = () => {
     localStorage.removeItem("user");

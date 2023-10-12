@@ -6,7 +6,7 @@ function Home() {
   const [allposts, setAllposts] = useState("");
   useEffect(() => {
     const fetchPosts = async () => {
-      const res = await axios.get("http://localhost:5000/all/posts");
+      const res = await axios.get("https://api-blog-mquf.onrender.com/all/posts");
       setAllposts(res.data.posts);
     };
     fetchPosts();
